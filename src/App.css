@@ -119,10 +119,6 @@ textarea {
   gap: 10px;
 }
 
-@media (min-width: 480px) {
-  .mode-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
 .mode-card {
   background: var(--surface);
   border: 1px solid var(--border);
