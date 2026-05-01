@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-import Anthropic from '@anthropic-ai/sdk'
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -127,42 +126,26 @@ No intro sentence. No closing sentence. Just the 3 numbered points then the → 
 }
 
 async function callClaude(apiMessages, systemPrompt) {
-  const client = new Anthropic({
-    apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY,
-    dangerouslyAllowBrowser: true,
+  const res = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages: apiMessages, systemPrompt }),
   })
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 600,
-    system: systemPrompt,
-    messages: apiMessages,
-  })
-  return response.content[0].text
+  if (!res.ok) {
+    const err = await res.json()
+    throw new Error(err.error || 'API error')
+  }
+  const data = await res.json()
+  return data.content
 }
 
 async function fetchVerdict(apiMessages) {
-  const client = new Anthropic({
-    apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY,
-    dangerouslyAllowBrowser: true,
+  const res = await fetch('/api/verdict', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages: apiMessages }),
   })
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 400,
-    system: `You are an impartial debate judge. Analyze the full conversation and return ONLY a JSON object — no markdown, no extra text — with these exact keys:
-{
-  "score": <integer 1-10 rating the user's argument strength>,
-  "strongestMoment": "<one sentence: the user's single strongest argument>",
-  "biggestGap": "<one sentence: the user's most significant logical gap or weakness>",
-  "takeaway": "<one sentence: the most important thing the user should reflect on>"
-}`,
-    messages: [
-      ...apiMessages,
-      { role: 'user', content: 'Give me the verdict on my performance.' },
-    ],
-  })
-  try {
-    return JSON.parse(response.content[0].text.trim())
-  } catch {
+  if (!res.ok) {
     return {
       score: 5,
       strongestMoment: 'You engaged consistently throughout the debate.',
@@ -170,25 +153,18 @@ async function fetchVerdict(apiMessages) {
       takeaway: 'Challenge your own assumptions before defending them.',
     }
   }
+  return res.json()
 }
 
 // ── Screens ───────────────────────────────────────────────────────────────────
 
 function HomeScreen({ onSelectMode }) {
-  const missingKey = !import.meta.env.VITE_ANTHROPIC_API_KEY
-
   return (
     <div className="home-screen">
       <header className="home-header">
         <h1 className="app-title">PushBack</h1>
         <p className="app-tagline">Most AI agrees with you. We don't.</p>
       </header>
-
-      {missingKey && (
-        <div className="api-warning">
-          ⚠️ Add <code>VITE_ANTHROPIC_API_KEY=your-key</code> to a <code>.env</code> file and restart the dev server.
-        </div>
-      )}
 
       <div className="mode-grid">
         {MODES.map((mode) => (
