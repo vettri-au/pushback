@@ -151,29 +151,19 @@ textarea {
 .lp-cta-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 .lp-cta-btn:active { transform: translateY(0); }
 
-/* Problem */
-.lp-problem {
-  padding: 60px 0;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
 .lp-problem-text {
-  font-size: 1.05rem;
+  font-size: 1rem;
   line-height: 1.7;
   color: var(--text-dim);
-  margin-bottom: 20px;
+  margin-top: 8px;
 }
 
 .lp-problem-highlight {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text);
   line-height: 1.5;
   letter-spacing: -0.02em;
-  padding-left: 16px;
-  border-left: 3px solid #ef4444;
 }
 
 /* Manifesto */

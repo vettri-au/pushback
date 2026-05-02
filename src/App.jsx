@@ -205,7 +205,7 @@ function LandingPage({ onSelectMode }) {
   return (
     <div className="landing">
 
-      {/* ── Hero ── */}
+      {/* ── Hero + Problem ── */}
       <section className="lp-hero">
         <p className="lp-eyebrow">AI-powered mental sparring</p>
         <h1 className="lp-title">
@@ -215,22 +215,16 @@ function LandingPage({ onSelectMode }) {
         <p className="lp-subtitle">
           The only AI built to argue back — so your ideas get sharper before they meet the real world.
         </p>
+        <p className="lp-problem-text">
+          Everyone around you is too polite. Your friends support you. Your colleagues stay neutral. Every AI validates you. So your blind spots stay hidden —
+          <strong> until they cost you.</strong>
+        </p>
+        <p className="lp-problem-highlight">
+          PushBack is the uncomfortable conversation you've been avoiding.
+        </p>
         <button className="lp-cta-btn" onClick={scrollToModes}>
           Start a Debate →
         </button>
-      </section>
-
-      {/* ── Problem ── */}
-      <section className="lp-problem">
-        <div className="lp-container">
-          <p className="lp-problem-text">
-            Everyone around you is too polite. Your friends support you. Your colleagues stay neutral. Every AI validates you. So your blind spots stay hidden —
-            <strong> until they cost you.</strong>
-          </p>
-          <p className="lp-problem-highlight">
-            PushBack is the uncomfortable conversation you've been avoiding.
-          </p>
-        </div>
       </section>
 
       {/* ── Manifesto ── */}
