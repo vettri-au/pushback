@@ -17,7 +17,13 @@ export default async function handler(req, res) {
     const response = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 600,
-      system: systemPrompt,
+      system: [
+        {
+          type: 'text',
+          text: systemPrompt,
+          cache_control: { type: 'ephemeral' },
+        },
+      ],
       messages,
     })
     res.status(200).json({ content: response.content[0].text })
