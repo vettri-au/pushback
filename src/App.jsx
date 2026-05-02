@@ -233,6 +233,24 @@ function LandingPage({ onSelectMode }) {
         </div>
       </section>
 
+      {/* ── Manifesto ── */}
+      <section className="lp-manifesto">
+        <div className="lp-container">
+          <p className="lp-manifesto-body">
+            PushBack is designed to be ruthless with weak arguments — not with people. Every challenge, every sharp question, every refused concession exists for one reason: to help you think more clearly than you ever would alone.
+          </p>
+          <p className="lp-manifesto-body">
+            No soft stance. No comfortable agreement. No false validation.
+          </p>
+          <p className="lp-manifesto-body">
+            Because the moment you walk into that real conversation, that real meeting, that real decision — you'll want to have already faced the hardest version of it here.
+          </p>
+          <p className="lp-manifesto-closing">
+            Clarity is the point. Everything else is just the method.
+          </p>
+        </div>
+      </section>
+
       {/* ── Gains ── */}
       <section className="lp-section">
         <div className="lp-container">
