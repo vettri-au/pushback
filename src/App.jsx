@@ -205,6 +205,14 @@ function LandingPage({ onSelectMode }) {
   return (
     <div className="landing">
 
+      {/* ── Sticky Nav ── */}
+      <nav className="lp-nav">
+        <span className="lp-nav-brand">PushBack</span>
+        <button className="lp-nav-cta" onClick={scrollToModes}>
+          Start a Debate →
+        </button>
+      </nav>
+
       {/* ── Hero + Problem ── */}
       <section className="lp-hero">
         <p className="lp-eyebrow">Think sharper. Decide better.</p>

@@ -93,10 +93,48 @@ textarea {
   width: 100%;
 }
 
+/* Sticky Nav */
+.lp-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.lp-nav-brand {
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.lp-nav-cta {
+  padding: 8px 18px;
+  background: #ef4444;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: opacity 0.15s;
+}
+.lp-nav-cta:hover { opacity: 0.88; }
+
 /* Hero */
 .lp-hero {
   min-height: 100dvh;
-  padding: max(60px, env(safe-area-inset-top)) 32px 60px;
+  padding: max(96px, calc(env(safe-area-inset-top) + 72px)) 32px 60px;
   max-width: 960px;
   margin: 0 auto;
   width: 100%;
