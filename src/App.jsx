@@ -235,6 +235,23 @@ function LandingPage({ onSelectMode }) {
         </button>
       </section>
 
+      {/* ── Gains ── */}
+      <section className="lp-section">
+        <div className="lp-container">
+          <p className="lp-section-label">What you actually gain</p>
+          <h2 className="lp-section-title">Sharper thinking.<br />Fewer blind spots.</h2>
+          <div className="lp-gains-grid">
+            {GAINS.map((gain, i) => (
+              <div key={i} className="lp-gain-card">
+                <span className="lp-gain-icon">{gain.icon}</span>
+                <h3 className="lp-gain-title">{gain.title}</h3>
+                <p className="lp-gain-desc">{gain.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Manifesto ── */}
       <section className="lp-manifesto">
         <div className="lp-container">
@@ -252,23 +269,6 @@ function LandingPage({ onSelectMode }) {
           <p className="lp-manifesto-closing">
             Clarity is the point. Everything else is just the method.
           </p>
-        </div>
-      </section>
-
-      {/* ── Gains ── */}
-      <section className="lp-section">
-        <div className="lp-container">
-          <p className="lp-section-label">What you actually gain</p>
-          <h2 className="lp-section-title">Sharper thinking.<br />Fewer blind spots.</h2>
-          <div className="lp-gains-grid">
-            {GAINS.map((gain, i) => (
-              <div key={i} className="lp-gain-card">
-                <span className="lp-gain-icon">{gain.icon}</span>
-                <h3 className="lp-gain-title">{gain.title}</h3>
-                <p className="lp-gain-desc">{gain.desc}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -341,8 +341,34 @@ function LandingPage({ onSelectMode }) {
   )
 }
 
+function ModeSelectScreen({ onSelectMode, onBack }) {
+  return (
+    <div className="mode-select-screen">
+      <button className="back-btn" onClick={onBack}>← Back</button>
+      <div className="mode-select-header">
+        <h2 className="mode-select-title">Pick your challenge</h2>
+        <p className="mode-select-sub">Choose how you want to be pushed back at.</p>
+      </div>
+      <div className="mode-grid">
+        {MODES.map((mode) => (
+          <button
+            key={mode.id}
+            className="mode-card"
+            onClick={() => onSelectMode(mode)}
+            style={{ '--accent': mode.color }}
+          >
+            <span className="mode-emoji">{mode.emoji}</span>
+            <span className="mode-name">{mode.name}</span>
+            <span className="mode-tagline">{mode.tagline}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function ModeScreen({ mode, onStart, onBack }) {
-  const [intensity, setIntensity] = useState(INTENSITIES[1])
+  const [intensity, setIntensity] = useState(INTENSITIES[0])
   const [statement, setStatement] = useState('')
   const canStart = statement.trim().length >= 10
 
@@ -465,6 +491,7 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
   const [isLoading, setIsLoading] = useState(false)
   const [pendingVerdict, setPendingVerdict] = useState(null)
   const [isFetchingVerdict, setIsFetchingVerdict] = useState(false)
+  const [confirmEnd, setConfirmEnd] = useState(false)
   const bottomRef = useRef(null)
   const systemPrompt = buildSystemPrompt(mode, intensity)
   const isDone = round >= MAX_ROUNDS
@@ -534,7 +561,7 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
 
   function formatError(err) {
     if (err?.message?.includes('Daily limit')) {
-      return "You've reached today's debate limit (3 debates). Come back tomorrow."
+      return "You've reached today's debate limit (10 debates). Come back tomorrow."
     }
     if (err?.message?.toLowerCase().includes('api') || err?.status === 401) {
       return 'API key missing or invalid — check your .env file and restart.'
@@ -552,7 +579,15 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
   return (
     <div className="debate-screen" style={{ '--accent': mode.color }}>
       <header className="debate-header">
-        <button className="back-btn end-btn" onClick={onEnd}>✕ End</button>
+        {confirmEnd ? (
+          <div className="end-confirm">
+            <span className="end-confirm-text">End this debate?</span>
+            <button className="end-confirm-yes" onClick={onEnd}>Yes, end</button>
+            <button className="end-confirm-no" onClick={() => setConfirmEnd(false)}>Keep going</button>
+          </div>
+        ) : (
+          <button className="back-btn end-btn" onClick={() => setConfirmEnd(true)}>✕ End</button>
+        )}
         <div className="debate-meta">
           <span className="mode-badge">{mode.emoji} {mode.name}</span>
           <span className="round-counter">Round {Math.min(round, MAX_ROUNDS)} of {MAX_ROUNDS}</span>
@@ -624,6 +659,25 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
 function VerdictScreen({ mode, verdict, onRestart, onHome }) {
   const score = verdict?.score ?? 5
   const scoreColor = score >= 7 ? '#22c55e' : score >= 4 ? '#f97316' : '#ef4444'
+  const [copied, setCopied] = useState(false)
+
+  const scoreLabel =
+    score >= 9 ? 'Exceptional — almost unbreakable' :
+    score >= 7 ? 'Strong argument, well defended' :
+    score >= 5 ? 'Solid performance with some gaps' :
+    score >= 3 ? 'You held your ground in places' :
+    'Your argument needs significant work'
+
+  const handleShare = async () => {
+    const text = `I scored ${score}/10 on PushBack ${mode.emoji}\n\n"${verdict?.takeaway}"\n\nThink you can do better? → https://pushback-lime.vercel.app`
+    if (navigator.share) {
+      await navigator.share({ title: 'My PushBack Verdict', text }).catch(() => {})
+    } else {
+      await navigator.clipboard.writeText(text)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    }
+  }
 
   return (
     <div className="verdict-screen" style={{ '--accent': mode.color }}>
@@ -645,6 +699,7 @@ function VerdictScreen({ mode, verdict, onRestart, onHome }) {
           </div>
           <div className="score-label">Argument Strength</div>
         </div>
+        <p className="score-interpretation" style={{ color: scoreColor }}>{scoreLabel}</p>
 
         <div className="verdict-cards">
           <div className="verdict-card">
@@ -671,6 +726,9 @@ function VerdictScreen({ mode, verdict, onRestart, onHome }) {
         </div>
 
         <div className="verdict-actions">
+          <button className="action-btn action-btn--share" onClick={handleShare}>
+            {copied ? '✓ Copied!' : '↗ Share My Score'}
+          </button>
           <button className="action-btn action-btn--primary" onClick={onRestart}>
             Same Mode Again
           </button>
@@ -724,11 +782,19 @@ export default function App() {
     setScreen('home')
   }
 
+  const handleBackToModes = () => {
+    setSelectedMode(null)
+    setScreen('modes')
+  }
+
   return (
     <div className="app">
       {screen === 'home' && <LandingPage onSelectMode={handleSelectMode} />}
+      {screen === 'modes' && (
+        <ModeSelectScreen onSelectMode={handleSelectMode} onBack={handleHome} />
+      )}
       {screen === 'mode' && (
-        <ModeScreen mode={selectedMode} onStart={handleStart} onBack={handleHome} />
+        <ModeScreen mode={selectedMode} onStart={handleStart} onBack={handleBackToModes} />
       )}
       {screen === 'debate' && (
         <DebateScreen
@@ -745,7 +811,7 @@ export default function App() {
           mode={selectedMode}
           verdict={verdict}
           onRestart={handleRestart}
-          onHome={handleHome}
+          onHome={() => setScreen('modes')}
         />
       )}
     </div>
