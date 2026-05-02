@@ -121,7 +121,7 @@ async function callClaude(apiMessages, systemPrompt) {
     body: JSON.stringify({ messages: apiMessages, systemPrompt }),
   })
   if (!res.ok) {
-    const err = await res.json()
+    const err = await res.json().catch(() => ({}))
     throw new Error(err.error || 'API error')
   }
   const data = await res.json()
@@ -365,6 +365,9 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
   }
 
   function formatError(err) {
+    if (err?.message?.includes('Daily limit')) {
+      return "You've reached today's debate limit (3 debates). Come back tomorrow."
+    }
     if (err?.message?.toLowerCase().includes('api') || err?.status === 401) {
       return 'API key missing or invalid — check your .env file and restart.'
     }
