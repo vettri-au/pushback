@@ -5,7 +5,7 @@ const redis = new Redis({
   token: process.env.KV_REST_API_TOKEN,
 })
 
-const DAILY_LIMIT = 15 // ~3 full debates (5 rounds each)
+const DAILY_LIMIT = 50 // ~10 full debates (5 rounds each)
 
 export function getIP(req) {
   const forwarded = req.headers['x-forwarded-for']
