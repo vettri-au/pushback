@@ -37,10 +37,17 @@ textarea {
 /* ── App Shell ────────────────────────────────────────────────────────────── */
 .app {
   min-height: 100dvh;
-  max-width: 640px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
+}
+
+/* App screens stay narrow and centered */
+.mode-screen,
+.debate-screen,
+.verdict-screen {
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* ── Shared ───────────────────────────────────────────────────────────────── */
@@ -80,14 +87,19 @@ textarea {
 }
 
 .lp-container {
-  padding: 0 20px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 32px;
   width: 100%;
 }
 
 /* Hero */
 .lp-hero {
   min-height: 100dvh;
-  padding: max(60px, env(safe-area-inset-top)) 24px 60px;
+  padding: max(60px, env(safe-area-inset-top)) 32px 60px;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -198,9 +210,17 @@ textarea {
 
 /* Gains */
 .lp-gains-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .lp-gains-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .lp-gains-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 .lp-gain-card {
@@ -342,6 +362,10 @@ textarea {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+}
+
+@media (min-width: 640px) {
+  .mode-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 .mode-card {
