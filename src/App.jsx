@@ -207,7 +207,7 @@ function LandingPage({ onSelectMode }) {
 
       {/* ── Hero + Problem ── */}
       <section className="lp-hero">
-        <p className="lp-eyebrow">AI-powered mental sparring</p>
+        <p className="lp-eyebrow">Think sharper. Decide better.</p>
         <h1 className="lp-title">
           Most AI agrees<br />with you.<br />
           <span className="lp-title-accent">We don't.</span>
