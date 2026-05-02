@@ -236,6 +236,8 @@ function LandingPage({ onSelectMode }) {
       {/* ── Manifesto ── */}
       <section className="lp-manifesto">
         <div className="lp-container">
+          <p className="lp-section-label">Core Philosophy</p>
+          <h2 className="lp-section-title">Built to challenge.<br />Not to comfort.</h2>
           <p className="lp-manifesto-body">
             PushBack is designed to be ruthless with weak arguments — not with people. Every challenge, every sharp question, every refused concession exists for one reason: to help you think more clearly than you ever would alone.
           </p>
