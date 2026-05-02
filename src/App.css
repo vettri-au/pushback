@@ -184,10 +184,6 @@ textarea {
   border-bottom: 1px solid var(--border);
 }
 
-.lp-manifesto .lp-container {
-  border-left: 3px solid #ef4444;
-  padding-left: 28px;
-}
 
 .lp-manifesto-body {
   font-size: clamp(1rem, 2.5vw, 1.1rem);
