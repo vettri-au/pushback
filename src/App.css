@@ -967,6 +967,49 @@ textarea {
   letter-spacing: -0.01em;
 }
 
+/* Dimensions */
+.dimensions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dimension-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.dimension-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.dimension-value {
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.dimension-track {
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.dimension-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+
+/* Verdict sections */
 .verdict-cards {
   width: 100%;
   display: flex;
@@ -1009,10 +1052,69 @@ textarea {
   line-height: 1.5;
 }
 
+.verdict-section {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.verdict-section--highlight {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+
+.verdict-section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.verdict-section-text {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.verdict-assumptions {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+}
+
+.verdict-assumptions li {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  padding-left: 18px;
+  position: relative;
+  color: var(--text);
+}
+
+.verdict-assumptions li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
 .verdict-actions {
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 9px;
+}
+
+.verdict-actions-row {
+  display: flex;
   gap: 9px;
 }
 
@@ -1030,9 +1132,17 @@ textarea {
 .action-btn:active { transform: translateY(0); }
 
 .action-btn--share {
+  flex: 1;
   background: none;
   border: 1px solid var(--accent);
   color: var(--accent);
+}
+
+.action-btn--pdf {
+  flex: 1;
+  background: none;
+  border: 1px solid var(--border-2);
+  color: var(--text-dim);
 }
 
 .action-btn--primary {
