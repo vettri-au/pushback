@@ -91,6 +91,49 @@ const INTENSITIES = [
   },
 ]
 
+const GAINS = [
+  {
+    icon: '🧠',
+    title: "Uncover what you don't know you don't know",
+    desc: "The most dangerous gaps aren't the ones you're aware of. PushBack surfaces assumptions buried so deep you forgot they were assumptions.",
+  },
+  {
+    icon: '🔍',
+    title: 'Test your ideas before they meet reality',
+    desc: 'A bad pitch to a real investor, a weak argument in a real meeting, a flawed plan in real life — these have real costs. Find the holes here first.',
+  },
+  {
+    icon: '💡',
+    title: "Think from angles you'd never naturally take",
+    desc: "Your brain defaults to your own perspective. PushBack forces you into the opposing view — not to change your mind, but to understand it better.",
+  },
+  {
+    icon: '⚡',
+    title: 'Sharpen your reasoning under pressure',
+    desc: 'Knowing something and being able to defend it are completely different skills. Five rounds of pushback builds the second one.',
+  },
+  {
+    icon: '🎯',
+    title: 'Walk into any room more prepared',
+    desc: "Investor meeting. Job interview. Difficult conversation. Negotiation. Whatever's coming — you've already faced a harder version of it here.",
+  },
+]
+
+const STEPS = [
+  {
+    title: 'Pick a mode',
+    desc: "Choose how you want to be challenged — debate, pitch, devil's advocate, or perspective flip.",
+  },
+  {
+    title: 'State your position',
+    desc: 'Share your opinion, idea, plan, or situation. The more specific, the sharper the pushback.',
+  },
+  {
+    title: 'Get pushed back at',
+    desc: 'Five rounds of relentless argumentation. Then a verdict — your score, your strongest moment, your biggest gap.',
+  },
+]
+
 // ── API helpers ───────────────────────────────────────────────────────────────
 
 function buildSystemPrompt(mode, intensity) {
@@ -147,28 +190,126 @@ async function fetchVerdict(apiMessages) {
 
 // ── Screens ───────────────────────────────────────────────────────────────────
 
-function HomeScreen({ onSelectMode }) {
-  return (
-    <div className="home-screen">
-      <header className="home-header">
-        <h1 className="app-title">PushBack</h1>
-        <p className="app-tagline">Most AI agrees with you. We don't.</p>
-      </header>
+function LandingPage({ onSelectMode }) {
+  const modesRef = useRef(null)
 
-      <div className="mode-grid">
-        {MODES.map((mode) => (
-          <button
-            key={mode.id}
-            className="mode-card"
-            onClick={() => onSelectMode(mode)}
-            style={{ '--accent': mode.color }}
-          >
-            <span className="mode-emoji">{mode.emoji}</span>
-            <span className="mode-name">{mode.name}</span>
-            <span className="mode-tagline">{mode.tagline}</span>
-          </button>
-        ))}
-      </div>
+  const scrollToModes = () => {
+    modesRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  return (
+    <div className="landing">
+
+      {/* ── Hero ── */}
+      <section className="lp-hero">
+        <p className="lp-eyebrow">AI-powered mental sparring</p>
+        <h1 className="lp-title">
+          Most AI agrees<br />with you.<br />
+          <span className="lp-title-accent">We don't.</span>
+        </h1>
+        <p className="lp-subtitle">
+          The only AI built to argue back — so your ideas get sharper before they meet the real world.
+        </p>
+        <button className="lp-cta-btn" onClick={scrollToModes}>
+          Start a Debate →
+        </button>
+      </section>
+
+      {/* ── Problem ── */}
+      <section className="lp-problem">
+        <div className="lp-container">
+          <p className="lp-problem-text">
+            Everyone around you is too polite. Your friends support you. Your colleagues stay neutral. Every AI validates you. So your blind spots stay hidden —
+            <strong> until they cost you.</strong>
+          </p>
+          <p className="lp-problem-highlight">
+            PushBack is the uncomfortable conversation you've been avoiding.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Gains ── */}
+      <section className="lp-section">
+        <div className="lp-container">
+          <p className="lp-section-label">What you actually gain</p>
+          <h2 className="lp-section-title">Sharper thinking.<br />Fewer blind spots.</h2>
+          <div className="lp-gains-grid">
+            {GAINS.map((gain, i) => (
+              <div key={i} className="lp-gain-card">
+                <span className="lp-gain-icon">{gain.icon}</span>
+                <h3 className="lp-gain-title">{gain.title}</h3>
+                <p className="lp-gain-desc">{gain.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── How it works ── */}
+      <section className="lp-section lp-section--alt">
+        <div className="lp-container">
+          <p className="lp-section-label">How it works</p>
+          <h2 className="lp-section-title">Three steps.<br />Five rounds. One verdict.</h2>
+          <div className="lp-steps">
+            {STEPS.map((step, i) => (
+              <div key={i} className="lp-step">
+                <div className="lp-step-number">{i + 1}</div>
+                <div className="lp-step-body">
+                  <div className="lp-step-title">{step.title}</div>
+                  <div className="lp-step-desc">{step.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Who it's for ── */}
+      <section className="lp-section">
+        <div className="lp-container">
+          <p className="lp-section-label">Who it's for</p>
+          <h2 className="lp-section-title">If you think,<br />this is for you.</h2>
+          <ul className="lp-who-list">
+            <li>Anyone with an idea they haven't fully stress-tested</li>
+            <li>Anyone about to walk into a conversation that matters</li>
+            <li>Anyone who wants to think more clearly and argue more precisely</li>
+            <li>Anyone brave enough to find out where their reasoning breaks down</li>
+          </ul>
+          <blockquote className="lp-quote">
+            "If you've never had your best idea torn apart and come out stronger — you haven't really tested it."
+          </blockquote>
+        </div>
+      </section>
+
+      {/* ── Modes / CTA ── */}
+      <section className="lp-section lp-section--cta" ref={modesRef}>
+        <div className="lp-container">
+          <p className="lp-section-label">Pick your challenge</p>
+          <h2 className="lp-section-title">Think you can<br />hold your ground?</h2>
+          <p className="lp-modes-sub">Most people discover something they missed. Find out what you're missing.</p>
+          <div className="mode-grid">
+            {MODES.map((mode) => (
+              <button
+                key={mode.id}
+                className="mode-card"
+                onClick={() => onSelectMode(mode)}
+                style={{ '--accent': mode.color }}
+              >
+                <span className="mode-emoji">{mode.emoji}</span>
+                <span className="mode-name">{mode.name}</span>
+                <span className="mode-tagline">{mode.tagline}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer className="lp-footer">
+        <p className="lp-footer-brand">PushBack</p>
+        <p className="lp-footer-tag">Most AI agrees with you. We don't.</p>
+      </footer>
+
     </div>
   )
 }
@@ -558,7 +699,7 @@ export default function App() {
 
   return (
     <div className="app">
-      {screen === 'home' && <HomeScreen onSelectMode={handleSelectMode} />}
+      {screen === 'home' && <LandingPage onSelectMode={handleSelectMode} />}
       {screen === 'mode' && (
         <ModeScreen mode={selectedMode} onStart={handleStart} onBack={handleHome} />
       )}
