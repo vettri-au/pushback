@@ -50,12 +50,17 @@ textarea {
   color: var(--text-dim);
   cursor: pointer;
   font-size: 0.875rem;
-  padding: 0;
+  padding: 8px 0;
   align-self: flex-start;
   transition: color 0.15s;
   line-height: 1;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
-.back-btn:hover { color: var(--text); }
+@media (hover: hover) {
+  .back-btn:hover { color: var(--text); }
+}
 
 .field-label {
   display: block;
@@ -69,7 +74,7 @@ textarea {
 
 /* ── Home Screen ──────────────────────────────────────────────────────────── */
 .home-screen {
-  padding: 52px 20px 40px;
+  padding: max(40px, env(safe-area-inset-top)) 20px 40px;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -133,12 +138,15 @@ textarea {
   transition: border-color 0.18s, transform 0.12s, background 0.18s;
   color: var(--text);
 }
-.mode-card:hover {
-  border-color: var(--accent);
-  background: var(--surface-2);
-  transform: translateY(-2px);
+.mode-card:active { background: var(--surface-2); }
+@media (hover: hover) {
+  .mode-card:hover {
+    border-color: var(--accent);
+    background: var(--surface-2);
+    transform: translateY(-2px);
+  }
+  .mode-card:active { transform: translateY(0); }
 }
-.mode-card:active { transform: translateY(0); }
 
 .mode-emoji { font-size: 1.6rem; line-height: 1; }
 
@@ -160,6 +168,7 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 28px;
+  overflow-y: auto;
 }
 
 .mode-header {
@@ -235,7 +244,7 @@ textarea {
   border-radius: 10px;
   padding: 14px;
   color: var(--text);
-  font-size: 0.92rem;
+  font-size: 16px; /* prevent iOS auto-zoom */
   resize: none;
   line-height: 1.55;
   transition: border-color 0.15s;
@@ -280,7 +289,7 @@ textarea {
 }
 
 .debate-header {
-  padding: 14px 18px 12px;
+  padding: max(14px, env(safe-area-inset-top)) 18px 12px;
   border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -456,7 +465,7 @@ textarea {
 
 /* ── Input Bar ────────────────────────────────────────────────────────────── */
 .input-bar {
-  padding: 10px 12px;
+  padding: 10px 12px max(10px, env(safe-area-inset-bottom));
   border-top: 1px solid var(--border);
   display: flex;
   gap: 8px;
@@ -471,7 +480,7 @@ textarea {
   border-radius: 10px;
   padding: 10px 13px;
   color: var(--text);
-  font-size: 0.88rem;
+  font-size: 16px; /* prevent iOS auto-zoom */
   resize: none;
   line-height: 1.45;
   transition: border-color 0.15s;
@@ -503,7 +512,7 @@ textarea {
 .send-btn:hover:not(:disabled) { opacity: 0.85; }
 
 .verdict-bar {
-  padding: 12px 16px;
+  padding: 12px 16px max(12px, env(safe-area-inset-bottom));
   border-top: 1px solid var(--border);
   flex-shrink: 0;
 }
@@ -527,10 +536,11 @@ textarea {
 /* ── Verdict Screen ───────────────────────────────────────────────────────── */
 .verdict-screen {
   min-height: 100dvh;
-  padding: 40px 20px 48px;
+  padding: max(40px, env(safe-area-inset-top)) 20px max(48px, env(safe-area-inset-bottom));
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
 }
 
 .verdict-content {
