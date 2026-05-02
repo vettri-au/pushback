@@ -6,14 +6,14 @@
 }
 
 :root {
-  --bg: #080810;
-  --surface: #10101a;
-  --surface-2: #18182a;
-  --border: #1e1e30;
-  --border-2: #2a2a40;
-  --text: #ededf5;
-  --text-dim: #7070a0;
-  --text-faint: #3a3a60;
+  --bg: #0f172a;
+  --surface: #1a2235;
+  --surface-2: #1e2d45;
+  --border: #1e2d45;
+  --border-2: #2a3f5f;
+  --text: #e8edf5;
+  --text-dim: #6b85a8;
+  --text-faint: #2a3f5f;
   --accent: #ef4444;
 }
 
