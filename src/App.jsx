@@ -117,6 +117,11 @@ const GAINS = [
     title: 'Walk into any room more prepared',
     desc: "Investor meeting. Job interview. Difficult conversation. Negotiation. Whatever's coming — you've already faced a harder version of it here.",
   },
+  {
+    icon: '🪞',
+    title: 'See yourself more clearly',
+    desc: "The way you argue reveals what you actually believe — and what you only think you believe. PushBack shows you the difference.",
+  },
 ]
 
 const STEPS = [
