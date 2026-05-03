@@ -10,33 +10,30 @@ export default async function handler(req, res) {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
     const response = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 1200,
-      system: `You are an impartial debate judge and coach. Analyze the full conversation and return ONLY a valid JSON object — no markdown, no extra text — with these exact keys:
+      max_tokens: 600,
+      system: `You are an expert idea validator. Read the full conversation and return ONLY a raw JSON object. No markdown. No code blocks. No backticks. No explanation. Just the JSON.
+
+The JSON must have exactly these two keys:
+
 {
-  "score": <integer 1-10, overall argument strength>,
-  "strongestMoment": "<one sentence: the user's single strongest argument>",
-  "biggestGap": "<one sentence: the user's most significant weakness>",
-  "takeaway": "<one sentence: the most important thing to reflect on>",
-  "dimensions": {
-    "viability": <integer 1-5, how viable the core idea actually is based on the conversation>,
-    "evidence": <integer 1-5, how well they supported their claims with real data or reasoning>,
-    "defensibility": <integer 1-5, how well they defended against challenges and adapted>
-  },
   "assumptions": [
-    "<MUST reference something specific the user actually said. Format exactly like this: 'When you said \"[direct quote or close paraphrase]\", you assumed [specific hidden belief] — but you never proved it.' Generic assumptions like 'you assumed your position is correct' are not acceptable.>",
-    "<Another specific moment from the conversation. Same format. Must be grounded in what they actually wrote, not a generic pattern.>",
-    "<A third specific assumption tied to a specific thing they said. If the user only made 2 clear assumptions, restate the most critical one with a different angle.>"
+    "When you said \\"[exact words or close paraphrase from the conversation]\\", you assumed [specific hidden belief] — but you never proved it.",
+    "When you said \\"[another specific thing they said]\\", you assumed [another specific hidden belief] — but you never proved it.",
+    "When you said \\"[a third specific thing they said]\\", you assumed [a third specific hidden belief] — but you never proved it."
   ],
-  "reframe": "<2-3 sentences: how the user could have argued their position more effectively — be specific and constructive>",
-  "resource": "<one concept, question, or area of thinking the user should explore to strengthen this kind of argument — be specific, not generic>"
-}`,
+  "resource": "[One specific concept, framework, or question the user should explore based on the actual gaps in their idea — be precise, not generic]"
+}
+
+CRITICAL: Every assumption MUST quote or closely paraphrase something the user actually wrote. Do NOT write generic assumptions like 'you assumed your position is correct'. If you cannot find 3 distinct assumptions, find 2 and rephrase the most important one from a different angle.`,
       messages: [
         ...messages,
         { role: 'user', content: 'Give me the full verdict and coaching breakdown on my performance.' },
       ],
     })
 
-    const verdict = JSON.parse(response.content[0].text.trim())
+    let text = response.content[0].text.trim()
+    text = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')
+    const verdict = JSON.parse(text)
     res.status(200).json(verdict)
   } catch (err) {
     res.status(200).json({
