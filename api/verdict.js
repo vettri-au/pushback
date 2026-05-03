@@ -23,9 +23,9 @@ export default async function handler(req, res) {
     "defensibility": <integer 1-5, how well they defended against challenges and adapted>
   },
   "assumptions": [
-    "<Quote or closely paraphrase something specific the user actually said, then state what hidden assumption it reveals. Format: 'When you said [specific thing], you assumed [specific hidden belief] — but you never proved it.' Be precise and grounded in the actual conversation.>",
-    "<Another specific moment from the conversation and the assumption it reveals. Same format.>",
-    "<A third specific assumption from the conversation. If fewer than 3 clear assumptions exist, identify the most important one the user repeated.>"
+    "<MUST reference something specific the user actually said. Format exactly like this: 'When you said \"[direct quote or close paraphrase]\", you assumed [specific hidden belief] — but you never proved it.' Generic assumptions like 'you assumed your position is correct' are not acceptable.>",
+    "<Another specific moment from the conversation. Same format. Must be grounded in what they actually wrote, not a generic pattern.>",
+    "<A third specific assumption tied to a specific thing they said. If the user only made 2 clear assumptions, restate the most critical one with a different angle.>"
   ],
   "reframe": "<2-3 sentences: how the user could have argued their position more effectively — be specific and constructive>",
   "resource": "<one concept, question, or area of thinking the user should explore to strengthen this kind of argument — be specific, not generic>"
