@@ -9,7 +9,7 @@ const MODES = [
   {
     id: 'stress-test',
     emoji: '🔨',
-    name: 'Stress Test',
+    name: 'Validate My Idea',
     tagline: 'Challenges your core assumptions',
     desc: 'Share your idea. Get its hidden assumptions torn apart — so you can rebuild it stronger.',
     inputLabel: 'Your idea',
@@ -196,7 +196,7 @@ function LandingPage({ onSelectMode }) {
       <nav className="lp-nav">
         <span className="lp-nav-brand">PushBack</span>
         <button className="lp-nav-cta" onClick={scrollToModes}>
-          Start a Debate →
+          Validate My Idea →
         </button>
       </nav>
 
@@ -218,7 +218,7 @@ function LandingPage({ onSelectMode }) {
           PushBack is the honest feedback you can't get from anyone around you.
         </p>
         <button className="lp-cta-btn" onClick={scrollToModes}>
-          Start a Debate →
+          Validate My Idea →
         </button>
       </section>
 
