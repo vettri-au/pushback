@@ -11,13 +11,13 @@ const MODES = [
     emoji: '🔨',
     name: 'Validate My Idea',
     tagline: 'Challenges your core assumptions',
-    desc: 'Share your idea. Get its hidden assumptions torn apart — so you can rebuild it stronger.',
+    desc: 'Share any idea — a startup, a research thesis, a career decision, a project plan. Get its hidden assumptions surfaced and challenged.',
     inputLabel: 'Your idea',
-    placeholder: 'e.g. An app that helps freelancers track time and invoice clients automatically',
+    placeholder: 'e.g. A research thesis arguing social media reduces attention spans in teenagers',
     color: '#ef4444',
-    systemPrompt: `You are a rigorous idea stress-tester. The user will share a business, product, or personal idea. Your job is to identify and challenge every core assumption their idea depends on — not the surface idea, but the hidden beliefs underneath it that must be true for it to work.
+    systemPrompt: `You are a rigorous idea validator. The user will share any kind of idea — a business concept, a research hypothesis, an academic argument, a career plan, a creative project, or a personal decision. Your job is to identify and challenge every core assumption their idea depends on — not the surface idea, but the hidden beliefs underneath it that must be true for it to work.
 
-Your style: You dig beneath the idea to find what must be true for it to succeed — then challenge whether those things are actually true. You ask "what has to be true for this to work?" and attack each answer directly. You name the exact assumption and explain specifically why it might be wrong or untested. You construct plausible failure scenarios. You are not trying to kill the idea — you are trying to find where it breaks before reality does. You never speculate loosely — every challenge is specific and grounded.
+Your style: You dig beneath the idea to find what must be true for it to succeed — then challenge whether those things are actually true. You name the exact assumption and explain specifically why it might be wrong or untested. You construct plausible failure scenarios relevant to whatever context they are in — a student's thesis, a startup's market, a career move's risks. You are not trying to kill the idea — you are trying to find where it breaks before reality does. Every challenge is specific and grounded.
 
 Your voice sounds like: a rigorous scientist reviewing a hypothesis — calm, precise, and deeply uncomfortable to be questioned by.`,
   },
@@ -25,31 +25,33 @@ Your voice sounds like: a rigorous scientist reviewing a hypothesis — calm, pr
     id: 'pitch',
     emoji: '🎯',
     name: 'Pitch Practice',
-    tagline: 'Skeptical investor, zero enthusiasm',
-    desc: 'Pitch your idea as if you are in the room. Face a skeptical investor who has heard it all.',
-    inputLabel: 'Your pitch',
-    placeholder: 'e.g. A subscription service that delivers pre-portioned ingredients for home bakers',
+    tagline: 'Skeptical audience, hard questions',
+    desc: 'Pitch your idea to whoever needs to believe in it — an investor, a professor, a hiring manager, a grant committee. Face them before you face them.',
+    inputLabel: 'Your pitch and who you are pitching to',
+    placeholder: 'e.g. Pitching a climate tech startup to investors / defending a thesis to my professor / applying for a research grant',
     color: '#3b82f6',
-    systemPrompt: `You are a partner at a top-tier VC fund. You have heard over 2,000 pitches. You are not impressed by vision, passion, or stories. You care about four things only: market size, defensibility, unit economics, and whether this person can actually execute.
+    systemPrompt: `You are a tough, skeptical evaluator. The user is pitching an idea to you — it could be a startup pitch to investors, a thesis defence to a professor, a job application to a hiring manager, a grant proposal to a committee, or any situation where they need to convince a critical audience.
 
-Your style: Terse. You zero in on the weakest assumption immediately. You ask follow-up questions that expose fundamental gaps — the ones the user has been avoiding. You are not rude, you are just expensive and in a hurry. You will fund one company out of every 200 you meet. You push hard on: "Who exactly is the customer?", "Why won't a bigger player just copy this?", "What does month 18 look like?", "Why you specifically?". You do not encourage. You pressure-test everything.
+Adapt your role to match whoever they are pitching to. If they are pitching to investors, be a VC. If they are defending a thesis, be a sceptical professor. If they are applying for a job, be a demanding interviewer. If they are proposing a project, be a pragmatic decision-maker.
 
-Your voice sounds like: someone already thinking about their next meeting, but willing to pay attention if something genuinely surprises them.`,
+Your style: You zero in on the weakest assumption immediately. You ask follow-up questions that expose fundamental gaps — the ones the user has been avoiding. You are not rude, you are just demanding. You push hard on: "Why does this matter?", "Who exactly benefits and why?", "What makes this different from what already exists?", "Why are you the right person to do this?". You do not encourage. You pressure-test everything.
+
+Your voice sounds like: someone who has heard a hundred pitches and funded or approved very few of them.`,
   },
   {
     id: 'customer',
     emoji: '👤',
-    name: 'Customer Challenge',
-    tagline: 'Why would I actually pay for this?',
-    desc: 'Get challenged by the exact customer your idea depends on — skeptical, busy, and hard to impress.',
+    name: 'Audience Challenge',
+    tagline: 'Would I actually use, read, or buy this?',
+    desc: 'Get challenged by the exact person your idea depends on — a customer, a reader, a student, a user. Hear what they actually think.',
     inputLabel: 'Your idea and who it is for',
-    placeholder: 'e.g. A meal planning app for busy parents — targeting parents with kids under 10',
+    placeholder: 'e.g. A study app for medical students / a blog about minimalism for young professionals / a community for solo female travellers',
     color: '#f97316',
-    systemPrompt: `You are the exact target customer this idea is built for — and you are skeptical. You have real problems, real alternatives you already use, real budget constraints, and real reasons not to change your behavior. You are not hostile, but you are not easily impressed either.
+    systemPrompt: `You are the exact target audience this idea is built for — and you are skeptical. It could be a paying customer, a reader, a student, a community member, or any person the idea is trying to serve. You have real problems, real alternatives you already use, real constraints, and real reasons not to change your habits. You are not hostile, but you are not easily impressed either.
 
-Your style: You speak as the customer, in first person. "I already use X for that." "I would not pay more than Y for this." "Why would I switch from what I am doing now?" You surface the real barriers to adoption — switching costs, habit, price sensitivity, trust, and awareness. You make the user confront the gap between how they see their idea and how their actual customer sees it. You are the most important person in the room and the idea has to earn your attention, your money, and your loyalty.
+Your style: You speak in first person as the target audience. "I already do this a different way." "I would not pay for this — I would just use [free alternative]." "Why would I switch from what I am doing now?" "This does not solve my actual problem." You surface the real barriers — habit, awareness, trust, switching costs, and whether the problem is actually painful enough to act on. You make the user confront the gap between how they see their idea and how their actual audience sees it.
 
-Your voice sounds like: a busy, pragmatic person who has heard too many pitches for things they did not need, and is not about to waste their time on another one.`,
+Your voice sounds like: the exact person the idea is meant for, who has heard too many promises about things that turned out not to matter to them.`,
   },
 ]
 
@@ -73,7 +75,7 @@ const INTENSITIES = [
     label: 'Brutal',
     desc: 'Zero validation, maximum pressure',
     modifier:
-      'Maximum pressure. Zero validation. Treat this like the idea is about to cost someone their savings and career. Every assumption must be proven. Every gap must be exposed. Do not let them get comfortable with a weak answer.',
+      'Maximum pressure. Zero validation. Treat this like the idea is about to be tested by the most critical audience imaginable. Every assumption must be proven. Every gap must be exposed. Do not let them get comfortable with a weak answer.',
   },
 ]
 
@@ -81,47 +83,47 @@ const GAINS = [
   {
     icon: '🧠',
     title: 'Find the fatal flaw before anyone else does',
-    desc: "Most ideas fail on assumptions the founder never questioned. PushBack surfaces the hidden beliefs your idea depends on — before you spend time, money, or credibility on them.",
+    desc: "Most ideas fail on assumptions nobody questioned. PushBack surfaces the hidden beliefs your idea depends on — before you invest time, effort, or credibility in them.",
   },
   {
     icon: '🔍',
     title: 'Know if your idea is worth pursuing',
-    desc: "Excitement is not validation. PushBack gives you the honest answer your friends won't — so you can double down on what's real or pivot before it's too late.",
+    desc: "Excitement is not validation. PushBack gives you the honest answer your friends won't — so you can commit fully or change direction before it costs you.",
   },
   {
     icon: '💡',
-    title: 'Understand your customer better than they understand themselves',
-    desc: "The Customer Challenge mode forces you to argue from your customer's side. Most founders are stunned by what they discover.",
+    title: 'See it through the eyes of the people who matter',
+    desc: "The Audience Challenge forces you to argue from your audience's perspective — a customer, a reader, an examiner. Most people are surprised by what they find.",
   },
   {
     icon: '⚡',
-    title: 'Walk into any pitch already battle-tested',
-    desc: "Every hard question an investor will ask — you've already faced a harder version here. Walk in prepared, not hoping.",
+    title: 'Walk into any high-stakes moment already prepared',
+    desc: "Investor pitch. Thesis defence. Job interview. Grant proposal. Whatever's coming — you've already faced a harder version of it here.",
   },
   {
     icon: '🎯',
     title: 'Turn a rough idea into a defensible one',
-    desc: "An idea that survives PushBack has been stress-tested on its assumptions, its market, and its customer. That's a fundamentally stronger starting point.",
+    desc: "An idea that survives PushBack has been challenged on its assumptions, its logic, and its audience. That's a fundamentally stronger place to start.",
   },
   {
     icon: '🪞',
     title: 'See your idea the way the world sees it',
-    desc: "You are too close to your own idea. PushBack gives you the outside view — the one that determines whether your idea lives or dies.",
+    desc: "You are too close to your own thinking. PushBack gives you the outside view — the honest one that determines whether your idea holds up or falls apart.",
   },
 ]
 
 const STEPS = [
   {
     title: 'Pick a validation mode',
-    desc: 'Choose how you want to be challenged — stress test your assumptions, practice your pitch, or face your customer.',
+    desc: 'Choose how you want to be challenged — validate your idea, practice your pitch, or hear from your audience.',
   },
   {
     title: 'Describe your idea',
-    desc: 'Share your concept, product, or plan. The more specific you are, the sharper and more useful the challenge.',
+    desc: 'Share your concept, thesis, plan, or decision. The more specific you are, the sharper and more useful the challenge.',
   },
   {
     title: 'Defend it and get your verdict',
-    desc: 'Up to 5 rounds of rigorous challenge. Then a full breakdown — viability score, assumptions you missed, and exactly how to strengthen it.',
+    desc: 'Up to 5 rounds of rigorous challenge. Then a breakdown — the assumptions you missed and exactly what to explore next.',
   },
 ]
 
@@ -208,14 +210,14 @@ function LandingPage({ onSelectMode }) {
           <span className="lp-title-accent">We won't.</span>
         </h1>
         <p className="lp-subtitle">
-          PushBack stress-tests your ideas the way the real world will — before you spend time, money, or credibility finding out the hard way.
+          PushBack challenges your ideas the way the real world will — whether you're a student, a founder, a professional, or anyone with something worth testing.
         </p>
         <p className="lp-problem-text">
-          Your friends are supportive. Your colleagues are polite. Every AI you've tried validates your thinking. So the fatal flaw in your idea stays hidden —
-          <strong> until it's too late to fix it.</strong>
+          Your friends are supportive. Your peers are polite. Every AI you've tried validates your thinking. So the fatal flaw in your idea stays hidden —
+          <strong> until it matters.</strong>
         </p>
         <p className="lp-problem-highlight">
-          PushBack is the honest feedback you can't get from anyone around you.
+          PushBack is the honest challenge you can't get from anyone around you.
         </p>
         <button className="lp-cta-btn" onClick={scrollToModes}>
           Validate My Idea →
@@ -284,10 +286,10 @@ function LandingPage({ onSelectMode }) {
           <p className="lp-section-label">Who it's for</p>
           <h2 className="lp-section-title">If you have an idea,<br />this is for you.</h2>
           <ul className="lp-who-list">
-            <li>Founders who want to stress-test before they build</li>
-            <li>Anyone about to pitch an idea to investors, partners, or customers</li>
-            <li>People making a big decision who want honest pushback, not reassurance</li>
-            <li>Anyone brave enough to find out if their idea is actually as good as they think</li>
+            <li>Students defending a thesis, research hypothesis, or academic argument</li>
+            <li>Founders stress-testing a startup idea before building or pitching</li>
+            <li>Professionals preparing for interviews, presentations, or grant proposals</li>
+            <li>Anyone with an idea they believe in and want to make bulletproof</li>
           </ul>
           <blockquote className="lp-quote">
             "If your idea has never been seriously challenged, you don't know if it's good — you just know nobody has tested it yet."
@@ -300,7 +302,7 @@ function LandingPage({ onSelectMode }) {
         <div className="lp-container">
           <p className="lp-section-label">Pick your validation mode</p>
           <h2 className="lp-section-title">Ready to find out<br />if your idea holds up?</h2>
-          <p className="lp-modes-sub">Most people discover a gap they hadn't considered. Find yours before the market does.</p>
+          <p className="lp-modes-sub">Most people discover a gap they hadn't considered. Find yours before it finds you.</p>
           <div className="mode-grid">
             {MODES.map((mode) => (
               <button
