@@ -493,6 +493,7 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
   const [isLoading, setIsLoading] = useState(false)
   const [isGettingVerdict, setIsGettingVerdict] = useState(false)
   const [confirmEnd, setConfirmEnd] = useState(false)
+  const [continued, setContinued] = useState(false)
   const bottomRef = useRef(null)
   const systemPrompt = buildSystemPrompt(mode, intensity)
   const isDone = round >= MAX_ROUNDS
@@ -591,10 +592,10 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
         )}
         <div className="debate-meta">
           <span className="mode-badge">{mode.emoji} {mode.name}</span>
-          <span className="round-counter">Round {Math.min(round, MAX_ROUNDS)} of {MAX_ROUNDS}</span>
+          <span className="round-counter">Round {Math.min(round, MAX_ROUNDS)} of {continued ? MAX_ROUNDS : MIN_ROUNDS}</span>
         </div>
         <div className="round-pips">
-          {Array.from({ length: MAX_ROUNDS }).map((_, i) => (
+          {Array.from({ length: continued ? MAX_ROUNDS : MIN_ROUNDS }).map((_, i) => (
             <span
               key={i}
               className="pip"
@@ -621,17 +622,45 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
         <div ref={bottomRef} />
       </div>
 
-      {/* After min rounds: offer verdict or keep going */}
-      {canSeeVerdict && !isDone && (
-        <div className="verdict-offer">
+      {/* Input bar — always visible, disabled when waiting for choice or done */}
+      {!isDone && (
+        <div className="input-bar">
+          <textarea
+            className="chat-input"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={round === 0 ? 'Loading…' : canSeeVerdict && !continued ? 'Choose an option below…' : `Round ${round + 1} — fire back`}
+            disabled={isLoading || isDone || (canSeeVerdict && !continued)}
+            rows={2}
+          />
           <button
-            className="verdict-offer-btn"
+            className="send-btn"
+            onClick={handleSend}
+            disabled={!input.trim() || isLoading || isDone || (canSeeVerdict && !continued)}
+          >
+            →
+          </button>
+        </div>
+      )}
+
+      {/* After min rounds: two buttons */}
+      {canSeeVerdict && !continued && !isDone && (
+        <div className="round-choice">
+          <button
+            className="round-choice-btn round-choice-btn--verdict"
             onClick={handleGetVerdict}
             disabled={isGettingVerdict || isLoading}
           >
-            {isGettingVerdict ? 'Generating verdict…' : 'See Verdict →'}
+            {isGettingVerdict ? 'Generating…' : 'See Results →'}
           </button>
-          <span className="verdict-offer-or">or keep going (up to round {MAX_ROUNDS})</span>
+          <button
+            className="round-choice-btn round-choice-btn--continue"
+            onClick={() => setContinued(true)}
+            disabled={isLoading}
+          >
+            Continue →
+          </button>
         </div>
       )}
 
@@ -643,28 +672,7 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
             onClick={handleGetVerdict}
             disabled={isGettingVerdict}
           >
-            {isGettingVerdict ? 'Generating verdict…' : 'See Verdict →'}
-          </button>
-        </div>
-      )}
-
-      {!isDone && (
-        <div className="input-bar">
-          <textarea
-            className="chat-input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={round === 0 ? 'Loading…' : `Round ${round + 1} — fire back`}
-            disabled={isLoading || isDone}
-            rows={2}
-          />
-          <button
-            className="send-btn"
-            onClick={handleSend}
-            disabled={!input.trim() || isLoading || isDone}
-          >
-            →
+            {isGettingVerdict ? 'Generating verdict…' : 'See Results →'}
           </button>
         </div>
       )}
