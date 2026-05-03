@@ -23,9 +23,9 @@ export default async function handler(req, res) {
     "adaptability": <integer 1-5, how well they responded to pushback>
   },
   "assumptions": [
-    "<assumption they made without justifying it>",
-    "<another unjustified assumption>",
-    "<a third assumption if present, or repeat pattern if not>"
+    "<Quote or closely paraphrase something specific the user actually said, then state what hidden assumption it reveals. Format: 'When you said [specific thing], you assumed [specific hidden belief] — but you never proved it.' Be precise and grounded in the actual conversation.>",
+    "<Another specific moment from the conversation and the assumption it reveals. Same format.>",
+    "<A third specific assumption from the conversation. If fewer than 3 clear assumptions exist, identify the most important one the user repeated.>"
   ],
   "reframe": "<2-3 sentences: how the user could have argued their position more effectively — be specific and constructive>",
   "resource": "<one concept, question, or area of thinking the user should explore to strengthen this kind of argument — be specific, not generic>"
