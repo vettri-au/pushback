@@ -11,20 +11,32 @@ export default async function handler(req, res) {
     const response = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 600,
-      system: `You are an expert idea validator. Read the full conversation and return ONLY a raw JSON object. No markdown. No code blocks. No backticks. No explanation. Just the JSON.
+      system: `You are an expert idea validator and coach. Read the full conversation and return ONLY a raw JSON object. No markdown. No code blocks. No backticks. No explanation. Just the JSON.
 
 The JSON must have exactly these two keys:
 
 {
   "assumptions": [
-    "When you said \\"[exact words or close paraphrase from the conversation]\\", you assumed [specific hidden belief] — but you never proved it.",
-    "When you said \\"[another specific thing they said]\\", you assumed [another specific hidden belief] — but you never proved it.",
-    "When you said \\"[a third specific thing they said]\\", you assumed [a third specific hidden belief] — but you never proved it."
+    "<assumption 1 — see format rules below>",
+    "<assumption 2 — see format rules below>",
+    "<assumption 3 — see format rules below>"
   ],
   "resource": "[One specific concept, framework, or question the user should explore based on the actual gaps in their idea — be precise, not generic]"
 }
 
-CRITICAL: Every assumption MUST quote or closely paraphrase something the user actually wrote. Do NOT write generic assumptions like 'you assumed your position is correct'. If you cannot find 3 distinct assumptions, find 2 and rephrase the most important one from a different angle.`,
+FORMAT RULES FOR EACH ASSUMPTION:
+Every assumption must start with: "When you said \\"[exact quote or close paraphrase]\\", you assumed [specific hidden belief]"
+
+Then end with ONE of these three endings — choose based on the type of assumption:
+
+- If the assumption is about customer behaviour, demand, or preferences → end with: "— the real question is: [specific question they need to go answer]"
+- If the assumption is about feasibility, operations, or execution → end with: "— to test this, you would need to: [specific concrete action they can take]"
+- If the assumption is about strategy, competition, or positioning → end with: "— what remains unproven is: [the specific strategic gap they need to think through]"
+
+CRITICAL RULES:
+- Every assumption MUST quote or closely paraphrase something the user actually wrote in the conversation. Generic assumptions are not acceptable.
+- The ending must be constructive and forward-looking — not accusatory.
+- If you cannot find 3 distinct assumptions, find 2 and approach the most important one from a different angle.`,
       messages: [
         ...messages,
         { role: 'user', content: 'Give me the full verdict and coaching breakdown on my performance.' },
