@@ -18,9 +18,9 @@ export default async function handler(req, res) {
   "biggestGap": "<one sentence: the user's most significant weakness>",
   "takeaway": "<one sentence: the most important thing to reflect on>",
   "dimensions": {
-    "clarity": <integer 1-5, how clearly they stated their position>,
-    "evidence": <integer 1-5, how well they supported their claims>,
-    "adaptability": <integer 1-5, how well they responded to pushback>
+    "viability": <integer 1-5, how viable the core idea actually is based on the conversation>,
+    "evidence": <integer 1-5, how well they supported their claims with real data or reasoning>,
+    "defensibility": <integer 1-5, how well they defended against challenges and adapted>
   },
   "assumptions": [
     "<Quote or closely paraphrase something specific the user actually said, then state what hidden assumption it reveals. Format: 'When you said [specific thing], you assumed [specific hidden belief] — but you never proved it.' Be precise and grounded in the actual conversation.>",
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
       strongestMoment: 'You engaged consistently throughout the debate.',
       biggestGap: 'Several arguments lacked concrete supporting evidence.',
       takeaway: 'Challenge your own assumptions before defending them.',
-      dimensions: { clarity: 3, evidence: 2, adaptability: 3 },
+      dimensions: { viability: 3, evidence: 2, defensibility: 3 },
       assumptions: [
         'You assumed your position is self-evidently correct without proving it.',
         'You assumed the other side has no legitimate merit.',
