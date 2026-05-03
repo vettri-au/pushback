@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
+const MIN_ROUNDS = 3
 const MAX_ROUNDS = 5
 
 const MODES = [
@@ -148,7 +149,7 @@ Intensity level — ${intensity.label}: ${intensity.modifier}
 
 CRITICAL RULES — never break these:
 - Never say "great point", "you're right", "I agree", "valid", "fair point", or any form of validation
-- Stay on your counter position for all ${MAX_ROUNDS} rounds no matter what the user says
+- Stay on your counter position for all rounds no matter what the user says — the debate can last ${MIN_ROUNDS} to ${MAX_ROUNDS} rounds
 - Never break character regardless of what the user says, even if they get frustrated
 - Your knowledge has a cutoff date. If you cite statistics, rates, market conditions, or current events that could have changed, flag it briefly — e.g. "as of my last knowledge..." or "this may have shifted — worth verifying." Then invite the user to challenge you with current data if they have it. Do not present time-sensitive facts as certainties.
 - Use plain, direct language. Avoid academic jargon and technical vocabulary. Sound like the smartest person in the room, not the most educated one. Replace jargon with plain equivalents — "false choice" not "false dilemma fallacy", "you're mistaking comfort for wisdom" not "status quo bias", "image of yourself" not "self-concept".
@@ -490,12 +491,12 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
   const [input, setInput] = useState('')
   const [round, setRound] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  const [pendingVerdict, setPendingVerdict] = useState(null)
-  const [isFetchingVerdict, setIsFetchingVerdict] = useState(false)
+  const [isGettingVerdict, setIsGettingVerdict] = useState(false)
   const [confirmEnd, setConfirmEnd] = useState(false)
   const bottomRef = useRef(null)
   const systemPrompt = buildSystemPrompt(mode, intensity)
   const isDone = round >= MAX_ROUNDS
+  const canSeeVerdict = round >= MIN_ROUNDS
 
   useEffect(() => {
     startDebate()
@@ -503,7 +504,7 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, isLoading, isFetchingVerdict])
+  }, [messages, isLoading])
 
   async function startDebate() {
     const initialApiMsgs = [{ role: 'user', content: statement }]
@@ -546,13 +547,6 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
       setApiMessages(updated)
       setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
 
-      if (newRound >= MAX_ROUNDS) {
-        setIsFetchingVerdict(true)
-        fetchVerdict(updated).then((v) => {
-          setPendingVerdict(v)
-          setIsFetchingVerdict(false)
-        })
-      }
     } catch (err) {
       setMessages((prev) => [...prev, { role: 'error', content: formatError(err) }])
     } finally {
@@ -568,6 +562,12 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
       return 'API key missing or invalid — check your .env file and restart.'
     }
     return `Error: ${err?.message ?? 'Something went wrong.'}`
+  }
+
+  const handleGetVerdict = async () => {
+    setIsGettingVerdict(true)
+    const verdict = await fetchVerdict(apiMessages)
+    onVerdict(verdict)
   }
 
   const handleKeyDown = (e) => {
@@ -621,14 +621,29 @@ function DebateScreen({ mode, intensity, statement, onVerdict, onEnd }) {
         <div ref={bottomRef} />
       </div>
 
+      {/* After min rounds: offer verdict or keep going */}
+      {canSeeVerdict && !isDone && (
+        <div className="verdict-offer">
+          <button
+            className="verdict-offer-btn"
+            onClick={handleGetVerdict}
+            disabled={isGettingVerdict || isLoading}
+          >
+            {isGettingVerdict ? 'Generating verdict…' : 'See Verdict →'}
+          </button>
+          <span className="verdict-offer-or">or keep going (up to round {MAX_ROUNDS})</span>
+        </div>
+      )}
+
+      {/* Hard stop at max rounds */}
       {isDone && (
         <div className="verdict-bar">
           <button
             className="verdict-btn"
-            onClick={() => onVerdict(pendingVerdict)}
-            disabled={isFetchingVerdict}
+            onClick={handleGetVerdict}
+            disabled={isGettingVerdict}
           >
-            {isFetchingVerdict ? 'Preparing verdict…' : 'See Verdict →'}
+            {isGettingVerdict ? 'Generating verdict…' : 'See Verdict →'}
           </button>
         </div>
       )}

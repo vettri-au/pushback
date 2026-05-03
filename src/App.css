@@ -867,6 +867,36 @@ textarea {
 .send-btn:disabled { opacity: 0.2; cursor: not-allowed; }
 .send-btn:hover:not(:disabled) { opacity: 0.85; }
 
+.verdict-offer {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+.verdict-offer-btn {
+  padding: 8px 16px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.verdict-offer-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.verdict-offer-btn:hover:not(:disabled) { opacity: 0.88; }
+
+.verdict-offer-or {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+}
+
 .verdict-bar {
   padding: 12px 16px max(12px, env(safe-area-inset-bottom));
   border-top: 1px solid var(--border);
